@@ -7,8 +7,8 @@ entity ASMDIV is
 	     b: in std_logic_vector(4 downto 0);
 		  start, clock, reset: in std_logic;
 	     done: out std_logic;
-		  q: out std_logic_vector(15 downto 0);
-		  r: out std_logic_vector(4 downto 0));
+		  q: buffer std_logic_vector(15 downto 0);
+		  r: buffer std_logic_vector(4 downto 0));
 end ASMDIV;
 
 

@@ -77,13 +77,9 @@ signal kROM: integer range 0 to 64;
 signal RAMIn: std_logic_vector(15 downto 0);
 signal RamAddr,RAMBaseAddr: std_logic_vector(7 downto 0);
 -- don't forget RAM ALU input (O) and MUX21 fib input (0...01(16))
-signal qsig: std_logic_vector(15 downto 0);
-signal rsig: std_logic_vector(15 downto 0);
 
 begin
 
-Q <= qsig;
-R <= rsig;
 kROM <= conv_integer(unsigned(k));
 
 rom : ROM5x64 
@@ -115,8 +111,8 @@ div : ASMDIV
 	     b=>Nk,
 		  start=>DivStart, clock=>clock, reset=>'0',
 	     done=>DivDone,
-		  q=>qsig,
-		  r=>rsig(4 downto 0));
+		  q=>Q,
+		  r=>R(4 downto 0));
 		  
 fib: fibmodule
      port map(FibCalcInit=>FibCalcInit, FibRegEn=>FibRegEn, FibRegReset=>FibRegReset,
