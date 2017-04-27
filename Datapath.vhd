@@ -16,12 +16,12 @@ Entity Datapath is
 											RAMOut					  : out std_logic_vector(15 downto 0 );
 								LastAddr, FibCalcDone, DivDone  : out std_logic;
 							kO: out std_logic_vector(5 downto 0);
-							NkO:out std_logic_vector(4 downto 0) 	);
+							NkO: out std_logic_vector(4 downto 0) 	);
 End Datapath;
 
 Architecture behavioral of Datapath is										
 component ROM5x64 is		
-	port (address: in integer range 0 to 64;
+		port (address: in std_logic_vector(5 downto 0);
 				data: out std_logic_vector(4 downto 0));
 end component;
 
@@ -73,17 +73,12 @@ end component;
 
 signal ROMQ, Nk: std_logic_vector(4 downto 0);
 signal k: std_logic_vector(5 downto 0);
-signal kROM: integer range 0 to 64;
 signal RAMIn: std_logic_vector(15 downto 0);
 signal RamAddr,RAMBaseAddr: std_logic_vector(7 downto 0);
 -- don't forget RAM ALU input (O) and MUX21 fib input (0...01(16))
-
 begin
-
-kROM <= conv_integer(unsigned(k));
-
 rom : ROM5x64 
-      port map(address=>kROM,
+      port map(address=>k,
 				data=>ROMQ);
 ram: RAM16x192
      port map(address=>RAMAddr,
@@ -131,5 +126,7 @@ with RamInSel select
 				R when others;
 				
 RAMBaseAddr<=unsigned('0' & k & '0') + unsigned("00" & k);
-      
+
+NkO<=Nk;
+kO<=k;
 end behavioral;

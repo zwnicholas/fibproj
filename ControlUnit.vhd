@@ -52,8 +52,6 @@ type state_type is(ResetState, ROMRead, FibLoop, Divide, StrS, StrQ,
 			KCntrReset <= '0'; ROMen <= '0'; NcntrReset <= '0'; NKRegEn <= '0'; FibRegReset <= '0'; FibCalcInit <= '0';
 			FibRegEn <= '0'; nCntrEn <= '0'; DivStart <= '0'; RAMAddrCntrL <= '0'; RAMinSel <= "00"; RAMen <= '0'; RAMAddrCntrEn <='0'; 
 			KCntrEn <= '0'; DoneSig <= '0';
-			
-			--figure out done signal.  Also are they all zero or one?
 			Case state is
 				when ResetState =>
 					KCntrReset <= '1';
@@ -62,15 +60,10 @@ type state_type is(ResetState, ROMRead, FibLoop, Divide, StrS, StrQ,
 					DoneSig <= '0';
 				when ROMRead =>
 					ROMen <= '1';
-					--NcntrReset <= '1';
 					NKRegEn <= '1';
-					FibRegReset <= '1';
 					FibCalcInit <= '1';
 					FibRegEn <= '1';
 					nCntrEn <= '1';
-				--when FibInit =>
-					--FibCalcInit <= '1';
-					--FibRegEn <= '1';
 				when FibLoop =>
 					FibRegEn <= '1';
 					nCntrEn <= '1';
@@ -78,11 +71,13 @@ type state_type is(ResetState, ROMRead, FibLoop, Divide, StrS, StrQ,
 					DivStart <= '1';
 					RAMAddrCntrL <= '1';
 				when StrS =>
+				   DivStart<='1';
 					RAMinSEL <= "00";
 					RAMen <= '1';
 					RAMAddrCntrEn <= '1';
 					
 				when StrQ =>
+				   DivStart<='1';
 					RAMinSEL <= "01";
 					RAMen <= '1';
 					RAMAddrCntrEn <= '1';
@@ -90,8 +85,9 @@ type state_type is(ResetState, ROMRead, FibLoop, Divide, StrS, StrQ,
 				when StrR =>
 					RAMinSEL <= "10";
 					RAMen <= '1';
-					RAMAddrCntrEn <= '1';
-				
+				   FibRegReset <= '1';
+					nCntrReset <='1';
+					kCntrEn<='1';
 				when Done =>
 					if start <= '0' then DoneSig <= '1'; end if;
 			end case;

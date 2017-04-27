@@ -8,7 +8,7 @@ entity ASMDIVDP is
 		  clock, QShift, RLoad, RRes, AShift, ALoad, CntEn, CntLoad: in std_logic;
 	     z: buffer std_logic;
 		  rOut: out std_logic_vector(4 downto 0);
-		  q: buffer std_logic_vector(15 downto 0));
+		  q: out std_logic_vector(15 downto 0));
 end ASMDIVDP;
 
 
@@ -44,12 +44,7 @@ component divReg6 is
 	 signal BInv : std_logic_vector(4 downto 0);
 	 signal AddOut, r: std_logic_vector(5 downto 0);
 	 signal CntOut: std_logic_vector(3 downto 0);
-	 signal bparam: std_logic_vector(5 downto 0);
-	 
 begin
-
-bparam <= '1' & BInv;
-
    RReg : divReg6 port map(d=>RRegIn,
         reset=>RRes, load=>RLoad, clock=>clock, q=>R);
 	AReg : divShftReg16 port map(d=>ain, clock=>clock, load=>ALoad, 
@@ -58,7 +53,7 @@ bparam <= '1' & BInv;
 	                             serialIn=>Cout, q=>Q);
 	DivCntr: DivDnCnt port map(d=>"1111", count=>CntOut, load=>CntLoad, en=>CntEn, 
 	                           clock=>clock);
-	Adder: divAdd6 port map(a=>R, b=>bparam, cin=>'1', cout=>cout, sum=>AddOut);
+	Adder: divAdd6 port map(a=>R, b=>('1' & BInv), cin=>'1', cout=>cout, sum=>AddOut);
 	BInv<= not Bin;
 	with cout select 
 	   RRegIn(5 downto 1) <=

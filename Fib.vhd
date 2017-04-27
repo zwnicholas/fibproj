@@ -82,7 +82,7 @@ cu : ControlUnit port map(KCntrReset=>KCntrReset,ROMen=>ROMen, NcntrReset=>Ncntr
 		  DivDone=>DivDone, LastAddr=>LastAddr, Clock=>Clk);
 
 		  
-ROMenO<=ROMen; RAMenO<=RAMen; RAMrwO<=RAMrw; kCntrResetO<=kCntrReset; kCntrEnO<=kCntrReset;
+ROMenO<=ROMen; RAMenO<=RAMen; RAMrwO<=RAMrw; kCntrResetO<=kCntrReset; kCntrEnO<=kCntrEn;
 							nCntrEnO<=nCntrEn; nCntrResetO<=nCntrReset;
 											NkRegEnO<=NkRegEn;
 				  RAMAddrCntrLO<=RAMAddrCntrL; RAMAddrCntrEnO<=RAMAddrCntrEn;
