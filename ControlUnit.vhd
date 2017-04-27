@@ -6,7 +6,7 @@ use ieee.std_logic_1164.all;
 ENTITY ControlUnit is
 	port(KCntrReset, ROMen, NcntrReset, NKRegEn, FibRegReset: out std_logic;
 	     FibCalcInit, FibRegEn, nCntrEn, DivStart, RAMAddrCntrL: out std_logic;
-		  RAMen, RAMAddrCntrEn, kCntrEn, DoneSig: out std_logic;
+		  RAMen, RAMAddrCntrEn, RAMrw, kCntrEn, DoneSig: out std_logic;
 		  RAMInSel: out std_logic_vector(1 downto 0);
 		 start, Reset, FibCalcDone, DivDone, LastAddr, Clock: in std_logic);
 		 
@@ -51,7 +51,7 @@ type state_type is(ResetState, ROMRead, FibLoop, Divide, StrS, StrQ,
 		Begin
 			KCntrReset <= '0'; ROMen <= '0'; NcntrReset <= '0'; NKRegEn <= '0'; FibRegReset <= '0'; FibCalcInit <= '0';
 			FibRegEn <= '0'; nCntrEn <= '0'; DivStart <= '0'; RAMAddrCntrL <= '0'; RAMinSel <= "00"; RAMen <= '0'; RAMAddrCntrEn <='0'; 
-			KCntrEn <= '0'; DoneSig <= '0';
+			KCntrEn <= '0'; DoneSig <= '0'; RAMrw<='0';
 			Case state is
 				when ResetState =>
 					KCntrReset <= '1';

@@ -41,7 +41,7 @@ Architecture behavioral of Fib is
 	component ControlUnit is
 	port(KCntrReset, ROMen, NcntrReset, NKRegEn, FibRegReset: out std_logic;
 	     FibCalcInit, FibRegEn, nCntrEn, DivStart, RAMAddrCntrL: out std_logic;
-		  RAMen, RAMAddrCntrEn, kCntrEn, DoneSig: out std_logic;
+		  RAMen, RAMrw,RAMAddrCntrEn, kCntrEn, DoneSig: out std_logic;
 		  RAMInSel: out std_logic_vector(1 downto 0);
 		 start, Reset, FibCalcDone, DivDone, LastAddr, Clock: in std_logic);
 	end component;
@@ -78,7 +78,7 @@ cu : ControlUnit port map(KCntrReset=>KCntrReset,ROMen=>ROMen, NcntrReset=>Ncntr
 			NKRegEn=>NKRegEn, FibRegReset=>FibRegReset,
 	     FibCalcInit=>FibCalcInit, FibRegEn=>FibRegEn, nCntrEn=>nCntrEn, DivStart=>DivStart,
 		  RAMAddrCntrL=>RAMAddrCntrL,RAMen=>RAMen, RAMAddrCntrEn=>RAMAddrCntrEn, kCntrEn=>kCntrEn, DoneSig=>Done,
-		  RAMInSel=>RAMInSel,start=>start, Reset=>Reset, FibCalcDone=>FibCalcDone,
+		  RAMInSel=>RAMInSel,RAMrw=>RAMrw,start=>start, Reset=>Reset, FibCalcDone=>FibCalcDone,
 		  DivDone=>DivDone, LastAddr=>LastAddr, Clock=>Clk);
 
 		  

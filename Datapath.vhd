@@ -16,7 +16,8 @@ Entity Datapath is
 											RAMOut					  : out std_logic_vector(15 downto 0 );
 								LastAddr, FibCalcDone, DivDone  : out std_logic;
 							kO: out std_logic_vector(5 downto 0);
-							NkO: out std_logic_vector(4 downto 0) 	);
+							NkO: out std_logic_vector(4 downto 0) 	
+							);
 End Datapath;
 
 Architecture behavioral of Datapath is										
@@ -26,9 +27,9 @@ component ROM5x64 is
 end component;
 
 component RAM16x192 is
-	port (address: in std_logic_vector(7 downto 0);
+		port (address: in std_logic_vector(7 downto 0);
 			   data: in std_logic_vector(15 downto 0);
-			WE, Clk: in std_logic; -- find out if we need clk or not
+				  WE, En: in std_logic; 
 			   Qout: out std_logic_vector(15 downto 0));
 end component;
 
@@ -83,7 +84,7 @@ rom : ROM5x64
 ram: RAM16x192
      port map(address=>RAMAddr,
 			   data=>RAMIn,
-			WE=>RAMrw, Clk=>clock,
+			WE=>RAMrw, En=>RAMEn,
 			   Qout=>RAMOut);
 NkReg : genericReg
      generic map(N => 5)
@@ -126,7 +127,6 @@ with RamInSel select
 				R when others;
 				
 RAMBaseAddr<=unsigned('0' & k & '0') + unsigned("00" & k);
-
 NkO<=Nk;
 kO<=k;
 end behavioral;
